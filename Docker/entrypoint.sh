@@ -7,6 +7,9 @@ COMMAND="$@"
 chown -R dsmr: /home/dsmr /var/www/dsmrreader/
 if [ -e '/dev/ttyUSB0' ] ; then sudo chmod 666 /dev/ttyUSB* ; fi
 
+# Fix possible staled pid files
+rm -f /var/tmp/*.pid
+
 # Check if we're able to connect to the database instance
 # already. The port isn't required for postgresql.py but
 # it is added for the sake of completion.
