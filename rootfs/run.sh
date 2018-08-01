@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo ""
+echo "Start DSMR Reader"
+
 set -eo pipefail
 COMMAND="$@"
 
@@ -15,6 +18,8 @@ rm -f /var/tmp/*.pid
 # it is added for the sake of completion.
 DB_PORT=${DB_PORT:-5432}
 
+echo "Trying to connect to PostgreSQL database"
+
 cmd=$(find /usr/lib/postgresql/ -name pg_isready)
 cmd="$cmd -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -t 1"
 
@@ -22,14 +27,17 @@ timeout=60
 while ! $cmd >/dev/null 2>&1; do
     timeout=$(expr $timeout - 1)
     if [[ $timeout -eq 0 ]]; then
-        echo
-        echo "Could not connect to database server. Aborting..."
-        return 1
+        echo ""
+        echo "Could not connect to PostgreSQL database server. Aborting..."
+        sleep 1
+        exit 1
     fi
     echo -n "."
     sleep 1
 done
-echo
+
+echo ""
+echo "Successfully connected to PostgreSQL database"
 
 # Run migrations
 su dsmr -c "python3 manage.py migrate --noinput"

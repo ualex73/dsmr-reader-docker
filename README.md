@@ -32,15 +32,8 @@ Or drop the database and restore a backup:
 - docker-compose start dsmr
 
 ---
-The current configuration has been tested on Ubuntu 17.04 and Manjaro 17.0.2
+The current configuration has been tested on Ubuntu 16.04 and 18.04
 
 For Synology users:
 - Drivers are necessary: http://jadahl.dscloud.me/drivers.html
 - The docker-compose file must be set to version 2 instead of 3.
-
-## DEVELOPMENT
-
-Now there's also a development branch. It uses the development branch from https://github.com/dennissiemensma/dsmr-reader/tree/development.  
-A compose_project_name has been specified and the docker-compose file has been modified to use different ports and volumes.  
-
-HTTP: http://\<hostname>:8885
