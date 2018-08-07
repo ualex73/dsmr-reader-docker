@@ -3,13 +3,16 @@
 A docker-compose file in order to start the following application in Docker:  
 dsmr-reader (https://github.com/dennissiemensma/dsmr-reader)
 
-Also it starts a postgres container for the application to store it's data.
+The Docker image can be found in the following link:
+https://hub.docker.com/r/ualex73/dsmr-reader-docker/
+
+Also it starts a PostgreSQL container for the application to store it's data.
 
 You should first add the user you run Docker with on your host file system to the dialout group:
 sudo usermod -aG dialout $(whoami)
 
-After starting the containers with docker-compose, the dashboard is reachable at  
-HTTP: http://\<hostname>:8888  
+After starting the containers with docker-compose, the dashboard is reachable at HTTP:  
+http://\<hostname>:8888  
 
 After starting the containers, don't forget to modify the default DSMR version (default is DSMR v4):  
 http://\<hostname>:8888/admin/dsmr_datalogger/dataloggersettings/
