@@ -11,7 +11,7 @@ Also it starts a PostgreSQL container for the application to store it's data.
 You should first add the user you run Docker with on your host file system to the dialout group:
 sudo usermod -aG dialout $(whoami)
 
-After starting the containers with docker-compose, the dashboard is reachable at HTTP:  
+After starting the containers with docker-compose, the dashboard is reachable at:  
 http://\<hostname>:8888  
 
 After starting the containers, don't forget to modify the default DSMR version (default is DSMR v4):  
