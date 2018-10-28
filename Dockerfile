@@ -1,7 +1,7 @@
 FROM debian:stretch
 LABEL maintainer="Alex <ualex73@gmail.com>"
 
-ARG TAG="v1.25.0"
+ARG TAG="v1.26.0"
 #ARG TAG="-b development origin/development"
 ENV DEBIAN_FRONTEND="noninteractive"
 
