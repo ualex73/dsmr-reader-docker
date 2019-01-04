@@ -17,7 +17,7 @@ services:
 
   dsmr:
     build: .
-    image: xirixiz/dsmr-reader-docker
+    image: ualex73/dsmr-reader-docker
     container_name: dsmr
     links:
       - dsmrdb
