@@ -1,6 +1,6 @@
 FROM python:alpine
 
-ENV DSMR_READER_VERSION v2.0.0
+ENV DSMR_READER_VERSION v2.0.1
 
 ENV DSMR_USER admin
 ENV DSMR_EMAIL root@localhost
