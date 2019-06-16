@@ -4,7 +4,7 @@ FROM arm64v8/python:alpine
 ENV QEMU_EXECVE 1
 COPY qemu/qemu-aarch64-static /usr/bin
 
-ENV DSMR_READER_VERSION v2.0.1
+ENV DSMR_READER_VERSION v2.2.0
 
 ENV DSMR_USER admin
 ENV DSMR_EMAIL root@localhost

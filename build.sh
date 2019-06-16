@@ -15,5 +15,7 @@ done
 if [ ! -z "$VERSION" ]; then
   docker tag ualex73/dsmr-reader-docker:amd64 ualex73/dsmr-reader-docker:latest
   docker tag ualex73/dsmr-reader-docker:amd64 ualex73/dsmr-reader-docker:$VERSION
+  echo "=== Push to hub.docker.com ==="
+  echo "docker push ualex73/dsmr-reader-docker:arm32v6;docker push ualex73/dsmr-reader-docker:arm64v8;docker push ualex73/dsmr-reader-docker:amd64;docker push ualex73/dsmr-reader-docker:arm32v6-$VERSION;docker push ualex73/dsmr-reader-docker:arm64v8-$VERSION;docker push ualex73/dsmr-reader-docker:amd64-$VERSION;docker push ualex73/dsmr-reader-docker:latest"
 fi
 
