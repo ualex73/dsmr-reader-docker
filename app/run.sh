@@ -7,8 +7,8 @@ COMMAND="$@"
 DSMR_MODE=${DSMR_MODE:-SERVER}
 DSMR_MODE=`echo $DSMR_MODE | tr a-z A-Z`
 
-if [ "$DSMR_MODE" != "SERVER" ] && [ "$DSMR_MODE" != "CLIENT" ]; then
-  echo "The 'DSMR_MODE' can only be 'SERVER' or 'CLIENT'"
+if [ "$DSMR_MODE" != "SERVER" ] && [ "$DSMR_MODE" != "CLIENT" ] && [ "$DSMR_MODE" != "SERVER-NO-DATALOGGER" ]; then
+  echo "The 'DSMR_MODE' can only be 'SERVER', 'CLIENT' or 'SERVER-NO-DATALOGGER'"
   sleep 1
   exit 1
 fi
@@ -17,11 +17,34 @@ echo ""
 date +"%F %T"
 echo "Start DSMR Reader - Mode=$DSMR_MODE"
 
+# Set right serial permissions
 if [ -e '/dev/ttyUSB0' ]; then chmod 666 /dev/ttyUSB*; fi
 
+# Remove pids, they can cause issue during a restart
 rm -f /var/tmp/*.pid
 
-if [ "$DSMR_MODE" == "SERVER" ]; then
+# Check for throttle environment variables
+if [ -n "${DSMR_BACKEND_SLEEP}" ]; then
+  if grep 'DSMRREADER_BACKEND_SLEEP' /dsmr/dsmrreader/settings.py; then
+    echo "Setting DSMRREADER_BACKEND_SLEEP already present, replacing values ..."
+    sed -i "s/DSMRREADER_BACKEND_SLEEP=.*/DSMRREADER_BACKEND_SLEEP=${DSMR_BACKEND_SLEEP}/g" /dsmr/dsmrreader/settings.py
+  else
+    echo "Adding setting DSMRREADER_BACKEND_SLEEP ..."
+    sed -i "/# Default settings/a DSMRREADER_BACKEND_SLEEP=${DSMR_BACKEND_SLEEP}" /dsmr/dsmrreader/settings.py
+  fi
+fi
+if [ -n "${DSMR_DATALOGGER_SLEEP}" ]; then
+  if grep 'DSMRREADER_DATALOGGER_SLEEP' /dsmr/dsmrreader/settings.py; then
+    echo "Setting DSMRREADER_DATALOGGER_SLEEP already present, replacing values ..."
+    sed -i "s/DSMRREADER_DATALOGGER_SLEEP=.*/DSMRREADER_DATALOGGER_SLEEP=${DSMR_DATALOGGER_SLEEP}/g" /dsmr/dsmrreader/settings.py
+  else
+    echo "Adding setting DSMRREADER_DATALOGGER_SLEEP ..."
+    sed -i "/# Default settings/a DSMRREADER_DATALOGGER_SLEEP=${DSMR_DATALOGGER_SLEEP}" /dsmr/dsmrreader/settings.py
+  fi
+fi
+
+# We can support (remote) client mode too
+if [ "$DSMR_MODE" == "SERVER" ] || [ "$DSMR_MODE" == "SERVER-NO-DATALOGGER" ]; then
   # Check if we're able to connect to the database instance
   # already. The port isn't required for postgresql.py but
   # it is added for the sake of completion.
@@ -70,7 +93,11 @@ else:
   print('${DSMR_USER} already exists')
 PYTHON
 
-  cp /etc/supervisor.d/supervisord.ini.server /etc/supervisor.d/supervisord.ini
+  if [ "$DSMR_MODE" == "SERVER" ]; then
+    cp /etc/supervisor.d/supervisord.ini.server /etc/supervisor.d/supervisord.ini
+  else
+    cp /etc/supervisor.d/supervisord.ini.server-no-datalogger /etc/supervisor.d/supervisord.ini
+  fi
 else
   cp /etc/supervisor.d/supervisord.ini.client /etc/supervisor.d/supervisord.ini
 fi
@@ -78,4 +105,4 @@ fi
 # Run supervisor
 /usr/bin/supervisord -n
 
-# end
+# End
