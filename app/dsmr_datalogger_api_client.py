@@ -16,6 +16,8 @@ import os
 """
     These settings are only used when using this script as a dedicated remote datalogger.
 """
+SLEEP = 0.5
+
 DSMR_SERIALPORT = os.environ.get('DSMR_SERIALPORT', '/dev/ttyUSB0')
 DSMR_HOST = os.environ.get('DSMR_HOST', '127.0.0.1')
 DSMR_APIKEY = os.environ.get('DSMR_APIKEY', 'APIKEY-BLABLABLA-ABCDEFGHI')
