@@ -11,6 +11,7 @@ import time
 import serial
 import requests
 
+import os
 
 """
     These settings are only used when using this script as a dedicated remote datalogger.
