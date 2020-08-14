@@ -1,0 +1,16 @@
+image: ualex73/dsmr-reader-docker:latest
+manifests:
+  - image: ualex73/dsmr-reader-docker:amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: ualex73/dsmr-reader-docker:arm32v6
+    platform:
+      architecture: arm
+      os: linux
+      variant: v6
+  - image: ualex73/dsmr-reader-docker:arm64v8
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
