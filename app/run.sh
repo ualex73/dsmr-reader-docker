@@ -25,10 +25,20 @@ rm -f /var/tmp/*.pid
 # Check if we're able to connect to the database instance
 # already. The port isn't required for postgresql.py but
 # it is added for the sake of completion.
-DB_PORT=${DB_PORT:-5432}
+if [ -z "${DJANGO_DATABASE_PORT}" ]; then
+  if [ -z "${DB_PORT}" ]; then
+    DJANGO_DATABASE_PORT=5432
+  else
+    DJANGO_DATABASE_PORT=$DB_PORT
+  fi
+fi
+
+if [ -z "${DJANGO_DATABASE_HOST}" ]; then DJANGO_DATABASE_HOST=$DB_HOST; fi
+if [ -z "${DJANGO_DATABASE_USER}" ]; then DJANGO_DATABASE_USER=$DB_USER; fi
+if [ -z "${DJANGO_DATABASE_NAME}" ]; then DJANGO_DATABASE_NAME=$DB_NAME; fi
 
 cmd=$(command -v pg_isready)
-cmd="$cmd -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -t 1"
+cmd="$cmd -h $DJANGO_DATABASE_HOST -p $DJANGO_DATABASE_PORT -U $DJANGO_DATABASE_USER -d $DJANGO_DATABASE_NAME -t 1"
 
 echo "Executing '$cmd'"
 
@@ -49,7 +59,10 @@ echo "Connected to database successfully"
 python3 manage.py migrate --noinput
 python3 manage.py collectstatic --noinput
 
-if [ -z "${DSMR_USER}" ] || [ -z "$DSMR_EMAIL" ] || [ -z "${DSMR_PASSWORD}" ]; then
+if [ -z "${DSMRREADER_ADMIN_USER}" ]; then DSMRREADER_ADMIN_USER=$DSMR_USER; fi
+if [ -z "${DSMRREADER_ADMIN_PASSWORD}" ]; then DSMRREADER_ADMIN_PASSWORD=$DSMR_PASSWORD; fi
+
+if [ -z "${DSMRREADER_ADMIN_USER}" ] || [ -z "${DSMRREADER_ADMIN_PASSWORD}" ]; then
   echo "DSMR web credentials not set. Exiting."
   exit 1
 fi

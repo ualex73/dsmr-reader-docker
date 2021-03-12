@@ -9,6 +9,11 @@ manifests:
       architecture: arm
       os: linux
       variant: v6
+  - image: ualex73/dsmr-reader-docker:arm32v7
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
   - image: ualex73/dsmr-reader-docker:arm64v8
     platform:
       architecture: arm64
