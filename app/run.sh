@@ -36,7 +36,7 @@ if [ "${DSMR_MODE}" == "SERVER" ]; then
   DSMR_MODE=SERVER
 elif [ "${DSMR_MODE}" == "CLIENT" ] || [ "${DSMR_MODE}" == "DATALOGGER" ]; then
   DSMR_MODE=DATALOGGER
-elif [ "${DSMR_MODE}" == "SERVER-NO-DATALOGGER" ] || [ "$DSMR_MODE" == "NO-DATALOGGER" ]; then
+elif [ "${DSMR_MODE}" == "SERVER-NO-DATALOGGER" ] || [ "${DSMR_MODE}" == "NO-DATALOGGER" ]; then
   DSMR_MODE=SERVER-NO-DATALOGGER
 else
   LOG "ERROR: Invalid DSMR_MODE, only SERVER, DATALOGGER or SERVER-NO-DATALOGGER allowed"
