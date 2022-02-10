@@ -62,6 +62,8 @@ RUN apk --update add --no-cache \
       bash \
       nginx \
       postgresql-client \
+      zlib \
+      jpeg \
       supervisor && \
     echo "#1" && \
     mkdir -p /run/nginx/ && \

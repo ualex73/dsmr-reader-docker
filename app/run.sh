@@ -16,7 +16,8 @@ function CheckDBConnection()
   LOG "INFO: Executing '${CMD}'"
 
   timeout=60
-  while ! "${CMD}" >/dev/null 2>&1; do
+  while ! ${CMD} >/dev/null 2>&1
+  do
     timeout=$(expr $timeout - 1)
     if [[ $timeout -eq 0 ]]; then
       LOG "ERROR: Could not connect to database server. Aborting..."
