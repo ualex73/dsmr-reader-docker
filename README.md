@@ -29,7 +29,7 @@ Also you could easily create a backup:
 
 Or drop the database and restore a backup:
 - docker-compose stop dsmr
-- docker exec -t dsmrdb dropdb dsmrreader -U postgres
+- docker exec -t dsmrdb dropdb dsmrreader -U dsmrreader
 - docker exec -t dsmrdb createdb -O dsmrreader dsmrreader -U dsmrreader
 - cat /tmp/<your_dump>.sql | docker exec -i dsmrdb psql -U dsmrreader
 - docker-compose start dsmr
