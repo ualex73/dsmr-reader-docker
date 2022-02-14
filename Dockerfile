@@ -34,7 +34,7 @@ COPY --from=build /dsmr /dsmr
 COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 
-ENV DSMR_READER_VERSION v4.19.0
+ENV DSMR_READER_VERSION v5.0.0
 
 ENV DJANGO_DATABASE_ENGINE django.db.backends.postgresql
 
