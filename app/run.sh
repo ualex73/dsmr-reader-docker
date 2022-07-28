@@ -59,7 +59,7 @@ if ls /dev/ttyUSB* 1>/dev/null 2>&1; then
 fi
 
 # Remove pids, they can cause issue during a restart
-rm -f /var/tmp/*.pid
+rm -f /var/tmp/*.pid /tmp/*.pid
 
 # Check old environment values
 if [ -n "${DB_PORT}" ]; then DJANGO_DATABASE_PORT="${DB_PORT}"; fi

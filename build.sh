@@ -75,6 +75,7 @@ if [ ! -z "$VERSION" ] && [ -z "$DEV" ]; then
   ./manifest-tool-linux-amd64 push from-spec multi-arch-latest.yaml
 
   # Do the multi-arch push of <version>
+  sed "s/VERSION/$VERSION/" multi-arch-version-input.yaml >multi-arch-version.yaml
   ./manifest-tool-linux-amd64 push from-spec multi-arch-version.yaml
 fi
 
