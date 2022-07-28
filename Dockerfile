@@ -4,7 +4,7 @@
 
 FROM python:alpine AS build
 
-ENV DSMR_READER_VERSION v5.0.0
+ENV DSMR_READER_VERSION v5.5.1
 
 RUN apk add --no-cache \
     curl \
